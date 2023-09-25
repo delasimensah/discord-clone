@@ -45,9 +45,7 @@ const ServerIdPage: FC<ServerIdPageProps> = async ({ params }) => {
     return null;
   }
 
-  return <div>server page</div>;
-
-  // return redirect(`/servers/${params.serverId}/channels/${initialChannel?.id}`);
+  return redirect(`/servers/${params.serverId}/channels/${initialChannel?.id}`);
 };
 
 export default ServerIdPage;
