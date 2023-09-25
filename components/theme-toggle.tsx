@@ -36,9 +36,9 @@ const ThemeToggle = () => {
           Dark
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        {/* <DropdownMenuItem onClick={() => setTheme("system")}>
           System
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
