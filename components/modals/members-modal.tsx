@@ -1,98 +1,63 @@
 "use client";
 
-import { FC, useState } from "react";
-import axios from "axios";
-import { Check, Copy, RefreshCw } from "lucide-react";
+import { FC } from "react";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { useOrigin } from "@/hooks/use-origin";
+import UserAvatar from "@/components/user-avatar";
+
 import { useModal } from "@/hooks/use-modal-store";
+import { ServerWithMembersWithProfiles } from "@/types";
+
+const roleIconMap = {
+  GUEST: null,
+  MODERATOR: <ShieldCheck className="ml-2 h-4 w-4 text-indigo-500" />,
+  ADMIN: <ShieldAlert className="h-4 w-4 text-rose-400" />,
+};
 
 const MembersModal: FC = () => {
   const { isOpen, onClose, type, onOpen, data } = useModal();
-  const origin = useOrigin();
 
   const isModalOpen = isOpen && type === "members";
-  const { server } = data;
-
-  const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-
-  const onNew = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.patch(
-        `/api/servers/${server?.id}/invite-code`,
-      );
-
-      onOpen("invite", { server: response.data });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onCopy = () => {
-    navigator.clipboard.writeText(inviteUrl);
-    setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 1000);
-  };
+  const { server } = data as { server: ServerWithMembersWithProfiles };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="overflow-hidden bg-white p-0 text-black">
+      <DialogContent className="overflow-hidden bg-white text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Invite Friends
+            Manage Members
           </DialogTitle>
+
+          <DialogDescription className="text-center text-zinc-500">
+            {server?.members?.length} Members
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="p-6">
-          <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">
-            Server invite link
-          </Label>
+        <ScrollArea className="mt-8 max-h-[420px] pr-6">
+          {server?.members?.map((member) => (
+            <div key={member.id} className="mb-6 flex items-center gap-x-2">
+              <UserAvatar src={member.profile.imageUrl} />
 
-          <div className="mt-2 flex items-center gap-x-2">
-            <Input
-              disabled={isLoading}
-              className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
-              value={inviteUrl}
-            />
-            <Button disabled={isLoading} onClick={onCopy} size="icon">
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
+              <div className="flex flex-col gap-y-1">
+                <div className="flex items-center gap-x-1 text-xs font-semibold">
+                  {member.profile.name}
+                  {roleIconMap[member.role]}
+                </div>
 
-          <Button
-            onClick={onNew}
-            disabled={isLoading}
-            variant="link"
-            size="sm"
-            className="mt-4 text-xs text-zinc-500"
-          >
-            Generate a new link
-            <RefreshCw className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
+                <p className="text-xs text-zinc-500">{member.profile.email}</p>
+              </div>
+            </div>
+          ))}
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
