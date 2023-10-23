@@ -11,6 +11,10 @@ import {
   ShieldCheck,
   ShieldQuestion,
 } from "lucide-react";
+import { MemberRole } from "@prisma/client";
+import axios from "axios";
+import qs from "query-string";
+import { useRouter } from "next/navigation";
 
 import {
   Dialog,
@@ -44,11 +48,34 @@ const roleIconMap = {
 };
 
 const MembersModal: FC = () => {
+  const router = useRouter();
   const { isOpen, onClose, type, onOpen, data } = useModal();
   const [loadingId, setLoadingId] = useState("");
 
   const isModalOpen = isOpen && type === "members";
   const { server } = data as { server: ServerWithMembersWithProfiles };
+
+  const handleRoleChange = async (memberId: string, role: MemberRole) => {
+    try {
+      setLoadingId(memberId);
+
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+        },
+      });
+
+      const res = await axios.patch(url, { role });
+
+      router.refresh();
+      onOpen("members", { server: res.data });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingId("");
+    }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -94,7 +121,11 @@ const MembersModal: FC = () => {
 
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent>
-                              <DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleRoleChange(member.id, "GUEST")
+                                }
+                              >
                                 <Shield className="mr-2 h-4 w-4" />
                                 Guest
                                 {member.role === "GUEST" && (
@@ -102,7 +133,11 @@ const MembersModal: FC = () => {
                                 )}
                               </DropdownMenuItem>
 
-                              <DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleRoleChange(member.id, "MODERATOR")
+                                }
+                              >
                                 <ShieldCheck className="mr-2 h-4 w-4" />
                                 Moderator
                                 {member.role === "MODERATOR" && (
