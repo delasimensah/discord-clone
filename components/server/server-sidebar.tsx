@@ -11,7 +11,7 @@ import { db } from "@/lib/db";
 import ServerHeader from "./server-header";
 import ServerSearch from "./server-search";
 import ServerSection from "./server-section";
-// import ServerChannel from "./server-channel";
+import ServerChannel from "./server-channel";
 // import ServerMember from "./server-member";
 
 type ServerSidebarProps = {
@@ -141,7 +141,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
               label="Text Channels"
             />
 
-            {/* <div className="space-y-[2px]">
+            <div className="space-y-[2px]">
               {textChannels.map((channel) => (
                 <ServerChannel
                   key={channel.id}
@@ -150,7 +150,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
                   server={server}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
         )}
 
@@ -163,7 +163,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
               label="Voice Channels"
             />
 
-            {/* <div className="space-y-[2px]">
+            <div className="space-y-[2px]">
               {audioChannels.map((channel) => (
                 <ServerChannel
                   key={channel.id}
@@ -172,7 +172,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
                   server={server}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
         )}
         {!!videoChannels?.length && (
@@ -184,7 +184,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
               label="Video Channels"
             />
 
-            {/* <div className="space-y-[2px]">
+            <div className="space-y-[2px]">
               {videoChannels.map((channel) => (
                 <ServerChannel
                   key={channel.id}
@@ -193,7 +193,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
                   server={server}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
         )}
 

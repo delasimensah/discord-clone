@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, ReactNode } from "react";
 import { Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
@@ -19,7 +19,7 @@ type ServerSearchProps = {
     type: "channel" | "member";
     data:
       | {
-          icon: React.ReactNode;
+          icon: ReactNode;
           name: string;
           id: string;
         }[]
