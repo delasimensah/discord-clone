@@ -12,7 +12,7 @@ import ServerHeader from "./server-header";
 import ServerSearch from "./server-search";
 import ServerSection from "./server-section";
 import ServerChannel from "./server-channel";
-// import ServerMember from "./server-member";
+import ServerMember from "./server-member";
 
 type ServerSidebarProps = {
   serverId: string;
@@ -206,15 +206,11 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
               server={server}
             />
 
-            {/* <div className="space-y-[2px]">
+            <div className="space-y-[2px]">
               {members.map((member) => (
-                <ServerMember
-                  key={member.id}
-                  member={member}
-                  server={server}
-                />
+                <ServerMember key={member.id} member={member} server={server} />
               ))}
-            </div> */}
+            </div>
           </div>
         )}
       </ScrollArea>
