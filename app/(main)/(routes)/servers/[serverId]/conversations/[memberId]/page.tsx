@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import ChatHeader from "@/components/chat/chat-header";
 // import ChatMessages from "@/components/chat/chat-messages";
-// import ChatInput from "@/components/chat/chat-input";
+import ChatInput from "@/components/chat/chat-input";
 // import MediaRoom from "@/components/media-room";
 
 import { db } from "@/lib/db";
@@ -72,9 +72,9 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
         <MediaRoom chatId={conversation.id} video={true} audio={true} />
       )} */}
 
-      {/* {!searchParams.video && (
+      {!searchParams.video && (
         <>
-          <ChatMessages
+          {/* <ChatMessages
             member={currentMember}
             name={otherMember.profile.name}
             chatId={conversation.id}
@@ -86,7 +86,7 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
             socketQuery={{
               conversationId: conversation.id,
             }}
-          />
+          /> */}
           <ChatInput
             name={otherMember.profile.name}
             type="conversation"
@@ -96,7 +96,7 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
             }}
           />
         </>
-      )} */}
+      )}
     </div>
   );
 };
