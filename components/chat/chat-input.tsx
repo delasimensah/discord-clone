@@ -82,11 +82,13 @@ const ChatInput: FC<ChatInputProps> = ({ apiUrl, query, name, type }) => {
                     {...field}
                   />
 
-                  {/* <div className="absolute top-7 right-8">
-                <EmojiPicker
-                  onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
-                />
-              </div> */}
+                  <div className="absolute right-8 top-7">
+                    <EmojiPicker
+                      onChange={(emoji: string) =>
+                        field.onChange(`${field.value} ${emoji}`)
+                      }
+                    />
+                  </div>
                 </div>
               </FormControl>
             </FormItem>
