@@ -3,9 +3,9 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import ChatHeader from "@/components/chat/chat-header";
-// import ChatMessages from "@/components/chat/chat-messages";
+import ChatMessages from "@/components/chat/chat-messages";
 import ChatInput from "@/components/chat/chat-input";
-// import MediaRoom from "@/components/media-room";
+import MediaRoom from "@/components/media-room";
 
 import { db } from "@/lib/db";
 import { getOrCreateConversation } from "@/lib/conversation";
@@ -68,13 +68,13 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
         type="conversation"
       />
 
-      {/* {searchParams.video && (
+      {searchParams.video && (
         <MediaRoom chatId={conversation.id} video={true} audio={true} />
-      )} */}
+      )}
 
       {!searchParams.video && (
         <>
-          {/* <ChatMessages
+          <ChatMessages
             member={currentMember}
             name={otherMember.profile.name}
             chatId={conversation.id}
@@ -86,7 +86,8 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
             socketQuery={{
               conversationId: conversation.id,
             }}
-          /> */}
+          />
+
           <ChatInput
             name={otherMember.profile.name}
             type="conversation"

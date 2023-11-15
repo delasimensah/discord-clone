@@ -6,8 +6,8 @@ import { ChannelType } from "@prisma/client";
 
 import ChatHeader from "@/components/chat/chat-header";
 import ChatInput from "@/components/chat/chat-input";
-// import ChatMessages from "@/components/chat/chat-messages";
-// import MediaRoom from "@/components/media-room";
+import ChatMessages from "@/components/chat/chat-messages";
+import MediaRoom from "@/components/media-room";
 
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
@@ -53,7 +53,7 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({ params }) => {
 
       {channel.type === ChannelType.TEXT && (
         <>
-          {/* <ChatMessages
+          <ChatMessages
             member={member}
             name={channel.name}
             chatId={channel.id}
@@ -66,7 +66,7 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({ params }) => {
             }}
             paramKey="channelId"
             paramValue={channel.id}
-          /> */}
+          />
 
           <ChatInput
             name={channel.name}
@@ -80,13 +80,13 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({ params }) => {
         </>
       )}
 
-      {/* {channel.type === ChannelType.AUDIO && (
+      {channel.type === ChannelType.AUDIO && (
         <MediaRoom chatId={channel.id} video={false} audio={true} />
-      )} */}
+      )}
 
-      {/* {channel.type === ChannelType.VIDEO && (
+      {channel.type === ChannelType.VIDEO && (
         <MediaRoom chatId={channel.id} video={true} audio={true} />
-      )} */}
+      )}
     </div>
   );
 };
