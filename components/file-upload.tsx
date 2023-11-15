@@ -20,7 +20,13 @@ const FileUpload: FC<FileUploadProps> = ({ onChange, value, endpoint }) => {
   if (value && fileType !== "pdf") {
     return (
       <div className="relative h-20 w-20">
-        <Image fill src={value} alt="Upload" className="rounded-full" />
+        <Image
+          fill
+          src={value}
+          alt="Upload"
+          className="rounded-full bg-black/20"
+        />
+
         <button
           onClick={() => onChange("")}
           className="absolute right-0 top-0 rounded-full bg-rose-500 p-1 text-white shadow-sm"
